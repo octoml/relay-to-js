@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ES2015",
+    "moduleResolution": "node",
+
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+
+    "importHelpers": true,
+    "isolatedModules": false,
+    "strictNullChecks": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "lib": ["DOM", "ESNext"],
+
+    "composite": true,
+  },
+  "files": ["src/index.ts"],
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}

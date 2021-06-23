@@ -1,0 +1,43 @@
+{
+  "name": "relay-to-js",
+  "version": "1.0.0",
+  "description": "A translator from a serialized relay graph layout into a structured graph object in JavaScript/TypeScript",
+  "unpkg": "build/relay-to-js.min.js",
+  "jsdelivr": "build/relay-to-js.min.js",
+  "module": "build/relay-to-js.module.js",
+  "main": "build/relay-to-js.js",
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "test": "jest --config ./jest.config.json test/ && yarn schema",
+    "build": "rimraf build && rollup -c ./rollup.config.ts",
+    "prettierbase": "prettier --config ./prettierrc.json '{src,test}/**/*.ts'",
+    "format": "yarn prettierbase --write",
+    "schema": "mkdir -p build && typescript-json-schema 'src/index.ts' 'GraphData' > build/relay-schema.json",
+    "prepublishOnly": "yarn build && yarn test"
+  },
+  "author": "Chanwut (Mick) Kittivorawong",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@types/jest": "^26.0.23",
+    "jest": "^27.0.4",
+    "prettier": "^2.3.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.52.1",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.4",
+    "typescript-json-schema": "^0.50.1"
+  },
+  "keywords": [
+    "tvm",
+    "relay"
+  ],
+  "files": [
+    "build",
+    "LICENSE",
+    "README.md"
+  ]
+}
