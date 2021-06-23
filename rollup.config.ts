@@ -33,7 +33,7 @@ export default {
   ],
   plugins: [
     nodeResolve({browser: true}),
-    typescript({tsconfig: 'tsconfig.json'}),
+    typescript({tsconfig: 'tsconfig.build.json'}),
     bundleSize(),
   ],
 };

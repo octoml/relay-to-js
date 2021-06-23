@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest --config ./jest.config.json test/ && yarn schema",
     "build": "rimraf build && rollup -c ./rollup.config.ts",
-    "prettierbase": "prettier --config ./prettierrc.json '{src,test}/**/*.ts'",
+    "prettierbase": "prettier --config ./.prettierrc.json '{src,test}/**/*.ts'",
     "format": "yarn prettierbase --write",
     "schema": "mkdir -p build && typescript-json-schema 'src/index.ts' 'GraphData' > build/relay-schema.json",
     "prepublishOnly": "yarn build && yarn test"
