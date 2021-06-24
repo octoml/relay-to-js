@@ -1,4 +1,4 @@
-export * from './nodes/';
+export * as nodes from './nodes/';
 export {fromtvm} from './fromtvm';
 
 import {GenericNode} from './nodes/';

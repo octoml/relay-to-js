@@ -8,6 +8,8 @@ import {
 } from '../common';
 import {
   ArrayNode,
+  FuncTypeNode,
+  GlobalVarNode,
   NullNode,
   OpNode,
   relay,
@@ -25,7 +27,7 @@ export type Type = BaseType & {
   attrs: {
     args: ArrayNode.Type<ValueNode.Type>;
     attrs?: relay.AttrsNode.Type;
-    op: OpNode.Type;
+    op: OpNode.Type | GlobalVarNode.Type;
     span?: SpanNode.Type;
     type_args: ArrayNode.Type<TypeNode.Type>;
     _checked_type_: TypeNode.Type;
@@ -80,7 +82,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
           : {
               attrs: relay.AttrsNode.fromtvm({id: +attrs, nodes, visited}),
             }),
-        op: OpNode.fromtvm({id: +op, nodes, visited}),
+        op: (OpNode.stest(nodes[+op]) ? OpNode : GlobalVarNode).fromtvm({id: +op, nodes, visited}),
         type_args: ArrayNode.fromtvm<TypeNode.Type>({
           id: +type_args,
           nodes,
@@ -99,9 +101,32 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
 }
 
 function check(node: Type) {
-  if (node.attrs.args.data.length !== node.attrs.type_args.data.length) {
+  let typeNodes: ArrayNode.Type<TypeNode.Type>;
+  if (GlobalVarNode.test(node.attrs.op)) {
+    const typeNode = node.attrs.op.attrs._checked_type_;
+
+    if (!FuncTypeNode.test(typeNode)) {
+      throw new Error(`expecting Functype as the type for GlobalVar in Call's op, received ${typeNode.type_key}`);
+    }
+
+    if (!TypeNode.compare(node.attrs._checked_type_, typeNode.attrs.ret_type)) {
+      throw new Error(
+        typeMismatch(
+          JSON.stringify(typeNode.attrs.ret_type, null, 2),
+          JSON.stringify(node.attrs._checked_type_, null, 2),
+        ) +
+          " in Call node's __check_type__"
+      );
+    }
+
+    typeNodes = typeNode.attrs.arg_types;
+  } else {
+    typeNodes = node.attrs.type_args;
+  }
+
+  if (node.attrs.args.data.length !== typeNodes.data.length) {
     throw new Error(
-      `expecting ${node.attrs.type_args.data.length} arguments, recevied ${node.attrs.args.data.length} arguments`,
+      `expecting ${typeNodes.data.length} arguments, recevied ${node.attrs.args.data.length} arguments`,
     );
   }
 
@@ -109,13 +134,13 @@ function check(node: Type) {
     if (
       !TypeNode.compare(
         node.attrs.args.data[i].attrs._checked_type_,
-        node.attrs.type_args.data[i],
+        typeNodes.data[i],
       )
     ) {
       throw new Error(
         typeMismatch(
           JSON.stringify(node.attrs.args.data[i].attrs._checked_type_, null, 2),
-          JSON.stringify(node.attrs.type_args.data[i], null, 2),
+          JSON.stringify(typeNodes.data[i], null, 2),
         ) +
           ' at index: ' +
           i,

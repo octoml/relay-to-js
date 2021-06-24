@@ -6,7 +6,7 @@ import {
   typeMismatch,
   visitedTypeMismatch,
 } from './common';
-import {relay, runtime, SpanNode} from './';
+import {runtime, SpanNode, TypeNode} from './';
 
 export type TypeKey = 'GlobalVar';
 export const type_key: TypeKey = 'GlobalVar';
@@ -15,7 +15,7 @@ export const type_key: TypeKey = 'GlobalVar';
 export type Type = BaseType & {
   type_key: TypeKey;
   attrs: {
-    _checked_type_: relay.TensorTypeNode.Type;
+    _checked_type_: TypeNode.Type;
     name_hint: runtime.StringNode.Type;
     span?: SpanNode.Type;
   };
@@ -46,7 +46,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
     id,
     type_key,
     attrs: {
-      _checked_type_: relay.TensorTypeNode.fromtvm({
+      _checked_type_: TypeNode.fromtvm({
         id: +_checked_type_,
         nodes,
         visited,
