@@ -61,5 +61,6 @@ export function fromtvm<N extends GType>({
   });
 }
 
+// TODO: should not be any
 export const test = testFactory<Type<any>>(type_key);
 export const stest = stestFactory<SType>(type_key);

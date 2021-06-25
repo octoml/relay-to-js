@@ -1,3 +1,4 @@
+import { TypeNode } from '.';
 import * as ArrayNode from './Array';
 import {testFactory, FromTVMParams, stestFactory} from './common';
 import * as FuncTypeNode from './FuncType';
@@ -43,7 +44,7 @@ export type Type =
   | IntImmNode.Type
   | OpNode.Type
   | TupleTypeNode.Type
-  | GlobalVarNode.Type
+  | GlobalVarNode.Type<TypeNode.Type>
   | SpanNode.Type
   | SourceNameNode.Type
   // relay

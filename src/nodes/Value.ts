@@ -1,3 +1,4 @@
+import { TypeNode } from '.';
 import {FromTVMParams, stestFactory, testFactory, typeMismatch} from './common';
 import * as GlobalVarNode from './GlobalVar';
 import * as relay from './relay/';
@@ -21,7 +22,7 @@ export const type_keys = [
 ];
 
 export type Type =
-  | GlobalVarNode.Type
+  | GlobalVarNode.Type<TypeNode.Type>
   | relay.IfNode.Type
   | relay.ConstantNode.Type
   | relay.CallNode.Type

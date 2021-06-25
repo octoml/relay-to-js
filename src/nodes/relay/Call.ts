@@ -27,7 +27,7 @@ export type Type = BaseType & {
   attrs: {
     args: ArrayNode.Type<ValueNode.Type>;
     attrs?: relay.AttrsNode.Type;
-    op: OpNode.Type | GlobalVarNode.Type;
+    op: OpNode.Type | GlobalVarNode.Type<FuncTypeNode.Type>;
     span?: SpanNode.Type;
     type_args: ArrayNode.Type<TypeNode.Type>;
     _checked_type_: TypeNode.Type;
@@ -82,7 +82,12 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
           : {
               attrs: relay.AttrsNode.fromtvm({id: +attrs, nodes, visited}),
             }),
-        op: (OpNode.stest(nodes[+op]) ? OpNode : GlobalVarNode).fromtvm({id: +op, nodes, visited}),
+        op: (OpNode.stest(nodes[+op]) ? OpNode : GlobalVarNode).fromtvm({
+          id: +op,
+          nodes,
+          visited,
+          _test: FuncTypeNode.test
+        }),
         type_args: ArrayNode.fromtvm<TypeNode.Type>({
           id: +type_args,
           nodes,
@@ -105,17 +110,12 @@ function check(node: Type) {
   if (GlobalVarNode.test(node.attrs.op)) {
     const typeNode = node.attrs.op.attrs._checked_type_;
 
-    if (!FuncTypeNode.test(typeNode)) {
-      throw new Error(`expecting Functype as the type for GlobalVar in Call's op, received ${typeNode.type_key}`);
-    }
-
     if (!TypeNode.compare(node.attrs._checked_type_, typeNode.attrs.ret_type)) {
       throw new Error(
         typeMismatch(
           JSON.stringify(typeNode.attrs.ret_type, null, 2),
           JSON.stringify(node.attrs._checked_type_, null, 2),
-        ) +
-          " in Call node's __check_type__"
+        ) + " in Call node's __check_type__",
       );
     }
 
