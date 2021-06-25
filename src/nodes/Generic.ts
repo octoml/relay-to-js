@@ -1,4 +1,4 @@
-import { TypeNode } from '.';
+import {TypeNode} from '.';
 import * as ArrayNode from './Array';
 import {testFactory, FromTVMParams, stestFactory} from './common';
 import * as FuncTypeNode from './FuncType';

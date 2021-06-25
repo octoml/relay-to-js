@@ -1,4 +1,4 @@
-import { TypeNode } from '.';
+import {TypeNode} from '.';
 import {FromTVMParams, stestFactory, testFactory, typeMismatch} from './common';
 import * as GlobalVarNode from './GlobalVar';
 import * as relay from './relay/';

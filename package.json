@@ -1,6 +1,6 @@
 {
   "name": "relay-to-js",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "A translator from a serialized relay graph layout into a structured graph object in JavaScript/TypeScript",
   "unpkg": "build/relay-to-js.min.js",
   "jsdelivr": "build/relay-to-js.min.js",

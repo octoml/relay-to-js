@@ -86,7 +86,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
           id: +op,
           nodes,
           visited,
-          _test: FuncTypeNode.test
+          _test: FuncTypeNode.test,
         }),
         type_args: ArrayNode.fromtvm<TypeNode.Type>({
           id: +type_args,
@@ -107,7 +107,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
 
 function check(node: Type) {
   let typeNodes: ArrayNode.Type<TypeNode.Type>;
-  if (GlobalVarNode.test(node.attrs.op)) {
+  if (GlobalVarNode.testWithTypeFactory(FuncTypeNode.test)(node.attrs.op)) {
     const typeNode = node.attrs.op.attrs._checked_type_;
 
     if (!TypeNode.compare(node.attrs._checked_type_, typeNode.attrs.ret_type)) {

@@ -38,7 +38,7 @@ export function fromtvm<N extends GType>({
 
   if (visited[id]) {
     const ret = visited[id];
-    if (test(ret)) return ret;
+    if (testWithTypeFactory(_test)(ret)) return ret;
     throw new Error(visitedTypeMismatch(id, ret.type_key, node.type_key));
   }
 
@@ -61,6 +61,14 @@ export function fromtvm<N extends GType>({
   });
 }
 
-// TODO: should not be any
-export const test = testFactory<Type<any>>(type_key);
+export const test = testFactory<Type<GType>>(type_key);
 export const stest = stestFactory<SType>(type_key);
+
+export function testWithTypeFactory<T extends GType>(
+  t: Test<T>,
+): Test<Type<T>> {
+  return Object.assign(
+    (node: GType): node is Type<T> => test(node) && (node.data ?? []).every(t),
+    {type: [type_key]},
+  );
+}

@@ -1,6 +1,7 @@
 import {
   BaseType,
   FromTVMParams,
+  GType,
   stestFactory,
   Test,
   testFactory,
@@ -43,9 +44,15 @@ export function fromtvm<T extends TypeNode.Type>({
 
   if (visited[id]) {
     const ret = visited[id];
-    if (testWithType(ret, _test)) return ret;
-    // TODO: error with generic type
-    throw new Error(visitedTypeMismatch(id, ret.type_key, node.type_key));
+    if (testWithTypeFactory(_test)(ret)) return ret;
+    throw new Error(
+      visitedTypeMismatch(
+        id,
+        ret.type_key +
+          (test(ret) ? `<${ret.attrs._checked_type_.type_key}>` : ''),
+        node.type_key + `<${_test.type.join('|')}>`,
+      ),
+    );
   }
 
   const {_checked_type_, name_hint, span} = node.attrs;
@@ -75,6 +82,12 @@ export function fromtvm<T extends TypeNode.Type>({
 export const test = testFactory<Type<TypeNode.Type>>(type_key);
 export const stest = stestFactory<SType>(type_key);
 
-export function testWithType<T extends TypeNode.Type>(node: GenericNode.Type, t: Test<T>): node is Type<T> {
-  return test(node) && t(node.attrs._checked_type_);
+export function testWithTypeFactory<T extends TypeNode.Type>(
+  t: Test<T>,
+): Test<Type<T>> {
+  return Object.assign(
+    (node: GType): node is Type<T> =>
+      test(node) && t(node.attrs._checked_type_),
+    {type: [type_key]},
+  );
 }
