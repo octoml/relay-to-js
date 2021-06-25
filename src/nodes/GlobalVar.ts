@@ -63,7 +63,7 @@ export function fromtvm<T extends TypeNode.Type>({
   });
 
   if (!_test(__checked_type_)) {
-    throw new Error('');
+    throw new Error(typeMismatch(`${type_key}<${_test.type.join('|')}>`, `${type_key}<${_checked_type_}>`));
   }
 
   return (visited[id] = {
@@ -88,6 +88,6 @@ export function testWithTypeFactory<T extends TypeNode.Type>(
   return Object.assign(
     (node: GType): node is Type<T> =>
       test(node) && t(node.attrs._checked_type_),
-    {type: [type_key]},
+    {type: [`${type_key}<${t.type.join('|')}>`]},
   );
 }
