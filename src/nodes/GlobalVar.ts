@@ -8,7 +8,7 @@ import {
   typeMismatch,
   visitedTypeMismatch,
 } from './common';
-import {GenericNode, runtime, SpanNode, TypeNode} from './';
+import {runtime, SpanNode, TypeNode} from './';
 
 export type TypeKey = 'GlobalVar';
 export const type_key: TypeKey = 'GlobalVar';
