@@ -5,4 +5,6 @@ export * as DenseAttrsNode from './DenseAttrs';
 export * as DropoutAttrsNode from './DropoutAttrs';
 export * as GlobalPool2DAttrsNode from './GlobalPool2DAttrs';
 export * as MaxPool2DAttrsNode from './MaxPool2DAttrs';
+export * as ReshapeAttrsNode from './ReshapeAttrs';
 export * as SoftmaxAttrsNode from './SoftmaxAttrs';
+export * as TransposeAttrsNode from './TransposeAttrs';

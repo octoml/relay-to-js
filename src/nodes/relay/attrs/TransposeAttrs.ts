@@ -6,20 +6,16 @@ import {
   typeMismatch,
   visitedTypeMismatch,
 } from '../../common';
-import {ArrayNode, IntImmNode} from '../../';
+import {ArrayNode, IntImmNode} from '../..';
 
-export type TypeKey = 'relay.attrs.MaxPool2DAttrs';
-export const type_key: TypeKey = 'relay.attrs.MaxPool2DAttrs';
+export type TypeKey = 'relay.attrs.TransposeAttrs';
+export const type_key: TypeKey = 'relay.attrs.TransposeAttrs';
 
 // object type for TypeScript
 export type Type = BaseType & {
   type_key: TypeKey;
   attrs: {
-    ceil_mode: string;
-    layout: string;
-    padding: ArrayNode.Type<IntImmNode.Type>;
-    pool_size: ArrayNode.Type<IntImmNode.Type>;
-    strides: ArrayNode.Type<IntImmNode.Type>;
+    axes: ArrayNode.Type<IntImmNode.Type>;
   };
 };
 
@@ -27,11 +23,7 @@ export type Type = BaseType & {
 export type SType = {
   type_key: TypeKey;
   attrs: {
-    ceil_mode: string;
-    layout: string;
-    padding: string;
-    pool_size: string;
-    strides: string;
+    axes: string;
   };
 };
 
@@ -46,27 +38,13 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
     throw new Error(visitedTypeMismatch(id, ret.type_key, node.type_key));
   }
 
-  const {ceil_mode, layout, padding, pool_size, strides} = node.attrs;
+  const {axes} = node.attrs;
   return (visited[id] = {
     id,
     type_key,
     attrs: {
-      ceil_mode,
-      layout,
-      padding: ArrayNode.fromtvm<IntImmNode.Type>({
-        id: +padding,
-        nodes,
-        visited,
-        _test: IntImmNode.test,
-      }),
-      pool_size: ArrayNode.fromtvm<IntImmNode.Type>({
-        id: +pool_size,
-        nodes,
-        visited,
-        _test: IntImmNode.test,
-      }),
-      strides: ArrayNode.fromtvm<IntImmNode.Type>({
-        id: +strides,
+      axes: ArrayNode.fromtvm<IntImmNode.Type>({
+        id: +axes,
         nodes,
         visited,
         _test: IntImmNode.test,

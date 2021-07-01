@@ -51,6 +51,7 @@ export type SType = {
 
 export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
   const node = nodes[id];
+  if (node.type_key === '') return null;
   if (!stest(node)) throw new Error(typeMismatch(type_key, node.type_key));
 
   const _visited = visited[id];
@@ -102,6 +103,8 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
 
 function check(node: Type) {
   if (
+    node.attrs.ret_type &&
+    node.attrs.body.attrs._checked_type_ &&
     !TypeNode.compare(node.attrs.ret_type, node.attrs.body.attrs._checked_type_)
   ) {
     throw new Error(

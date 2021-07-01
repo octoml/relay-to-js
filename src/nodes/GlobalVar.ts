@@ -40,6 +40,7 @@ export function fromtvm<T extends TypeNode.Type>({
   _test,
 }: FromTVMParams & {_test?: Test<T>}): Type<T> {
   const node = nodes[id];
+  if (node.type_key === '') return null;
   if (!stest(node)) throw new Error(typeMismatch(type_key, node.type_key));
 
   if (visited[id]) {
@@ -63,7 +64,12 @@ export function fromtvm<T extends TypeNode.Type>({
   });
 
   if (!_test(__checked_type_)) {
-    throw new Error(typeMismatch(`${type_key}<${_test.type.join('|')}>`, `${type_key}<${_checked_type_}>`));
+    throw new Error(
+      typeMismatch(
+        `${type_key}<${_test.type.join('|')}>`,
+        `${type_key}<${_checked_type_}>`,
+      ),
+    );
   }
 
   return (visited[id] = {

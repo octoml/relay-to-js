@@ -56,6 +56,8 @@ export function fromtvm(params: FromTVMParams): Type {
       return relay.TupleGetItemNode.fromtvm(params);
     case 'relay.Var':
       return relay.VarNode.fromtvm(params);
+    case '':
+      return null;
     default:
       throw new Error(typeMismatch(type_keys.join(' or '), node.type_key));
   }

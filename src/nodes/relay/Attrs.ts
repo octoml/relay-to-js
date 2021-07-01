@@ -14,7 +14,9 @@ export type TypeKey =
   | attrs.DropoutAttrsNode.TypeKey
   | attrs.GlobalPool2DAttrsNode.TypeKey
   | attrs.MaxPool2DAttrsNode.TypeKey
-  | attrs.SoftmaxAttrsNode.TypeKey;
+  | attrs.ReshapeAttrsNode.TypeKey
+  | attrs.SoftmaxAttrsNode.TypeKey
+  | attrs.TransposeAttrsNode.TypeKey;
 export const type_keys = [
   'relay.attrs.BatchNormAttrs',
   'relay.attrs.BiasAddAttrs',
@@ -23,7 +25,9 @@ export const type_keys = [
   'relay.attrs.DropoutAttrs',
   'relay.attrs.GlobalPool2DAttrs',
   'relay.attrs.MaxPool2DAttrs',
+  'relay.attrs.ReshapeAttrs',
   'relay.attrs.SoftmaxAttrs',
+  'relay.attrs.TransposeAttrsNode',
 ];
 
 export type Type =
@@ -34,7 +38,9 @@ export type Type =
   | attrs.DropoutAttrsNode.Type
   | attrs.GlobalPool2DAttrsNode.Type
   | attrs.MaxPool2DAttrsNode.Type
-  | attrs.SoftmaxAttrsNode.Type;
+  | attrs.ReshapeAttrsNode.Type
+  | attrs.SoftmaxAttrsNode.Type
+  | attrs.TransposeAttrsNode.Type;
 
 export type SType =
   | attrs.BatchNormAttrsNode.SType
@@ -44,7 +50,9 @@ export type SType =
   | attrs.DropoutAttrsNode.SType
   | attrs.GlobalPool2DAttrsNode.SType
   | attrs.MaxPool2DAttrsNode.SType
-  | attrs.SoftmaxAttrsNode.SType;
+  | attrs.ReshapeAttrsNode.SType
+  | attrs.SoftmaxAttrsNode.SType
+  | attrs.TransposeAttrsNode.SType;
 
 export function fromtvm(params: FromTVMParams): Type {
   const node = params.nodes[params.id];
@@ -63,8 +71,14 @@ export function fromtvm(params: FromTVMParams): Type {
       return attrs.GlobalPool2DAttrsNode.fromtvm(params);
     case 'relay.attrs.MaxPool2DAttrs':
       return attrs.MaxPool2DAttrsNode.fromtvm(params);
+    case 'relay.attrs.ReshapeAttrs':
+      return attrs.ReshapeAttrsNode.fromtvm(params);
     case 'relay.attrs.SoftmaxAttrs':
       return attrs.SoftmaxAttrsNode.fromtvm(params);
+    case 'relay.attrs.TransposeAttrs':
+      return attrs.TransposeAttrsNode.fromtvm(params);
+    case '':
+      return null;
     default:
       throw new Error(typeMismatch(type_keys.join(' or '), node.type_key));
   }

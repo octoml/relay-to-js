@@ -31,7 +31,9 @@ export function fromtvm(params: FromTVMParams): Type {
 }
 
 export function compare(n1: Type, n2: Type) {
-  if (n1.type_key === 'FuncType' && n2.type_key === 'FuncType') {
+  if (!n1 || !n2) {
+    return !n1 && !n2;
+  } else if (n1.type_key === 'FuncType' && n2.type_key === 'FuncType') {
     return FuncTypeNode.compare(n1, n2);
   } else if (n1.type_key === 'TupleType' && n2.type_key === 'TupleType') {
     return TupleTypeNode.compare(n1, n2);

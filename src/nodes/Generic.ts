@@ -96,8 +96,8 @@ export function fromtvm(params: FromTVMParams): Type {
       return GlobalVarNode.fromtvm(params);
     case 'IntImm':
       return IntImmNode.fromtvm(params);
-    case '':
-      return NullNode.fromtvm(params);
+    // case '':
+    //   return NullNode.fromtvm(params);
     case 'Op':
       return OpNode.fromtvm(params);
     case 'SourceName':
@@ -136,10 +136,16 @@ export function fromtvm(params: FromTVMParams): Type {
       return relay.attrs.GlobalPool2DAttrsNode.fromtvm(params);
     case 'relay.attrs.MaxPool2DAttrs':
       return relay.attrs.MaxPool2DAttrsNode.fromtvm(params);
+    case 'relay.attrs.ReshapeAttrs':
+      return relay.attrs.ReshapeAttrsNode.fromtvm(params);
     case 'relay.attrs.SoftmaxAttrs':
       return relay.attrs.SoftmaxAttrsNode.fromtvm(params);
+    case 'relay.attrs.TransposeAttrs':
+      return relay.attrs.TransposeAttrsNode.fromtvm(params);
     case 'runtime.String':
       return runtime.StringNode.fromtvm(params);
+    case '':
+      return null;
   }
 }
 

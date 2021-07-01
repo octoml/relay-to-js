@@ -33,6 +33,7 @@ export function fromtvm<N extends GType>({
   _test?: Test<N>;
 }): Type<N> {
   const node = nodes[id];
+  if (node.type_key === '') return null;
   if (!stest(node)) throw new Error(typeMismatch(type_key, node.type_key));
   if (!_test) throw new Error('Array.fromtvm requires _test');
 
