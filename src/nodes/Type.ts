@@ -23,6 +23,8 @@ export function fromtvm(params: FromTVMParams): Type {
       return TupleTypeNode.fromtvm(params);
     case 'relay.TensorType':
       return relay.TensorTypeNode.fromtvm(params);
+    case '':
+      return null;
     default:
       throw new Error(typeMismatch(type_keys.join(' or '), node.type_key));
   }
