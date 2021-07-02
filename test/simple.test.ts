@@ -1,4 +1,5 @@
 import {fromtvm, GraphData} from '../src';
+import profiler from './data/profiler.json';
 
 describe('simple relay translation', () => {
   it('translates a simple serialized graph layout to a structured object', () => {
@@ -103,7 +104,7 @@ describe('simple relay translation', () => {
             type_params: {id: 11, type_key: 'Array'},
           },
         },
-        attrs: {type_key: '', id: 0},
+        attrs: null,
         body: {
           id: 3,
           type_key: 'relay.Constant',
@@ -140,5 +141,11 @@ describe('simple relay translation', () => {
         type_params: {id: 8, type_key: 'Array'},
       },
     });
+  });
+
+  it('translates a serialized graph layout from VM profiler', () => {
+    // @ts-ignore
+    fromtvm(profiler.nodes, profiler.root);
+    expect(true).toBe(true);
   });
 });
