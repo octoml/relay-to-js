@@ -96,8 +96,6 @@ export function fromtvm(params: FromTVMParams): Type {
       return GlobalVarNode.fromtvm(params);
     case 'IntImm':
       return IntImmNode.fromtvm(params);
-    // case '':
-    //   return NullNode.fromtvm(params);
     case 'Op':
       return OpNode.fromtvm(params);
     case 'SourceName':

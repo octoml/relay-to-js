@@ -10,7 +10,6 @@ import {
   ArrayNode,
   FuncTypeNode,
   GlobalVarNode,
-  NullNode,
   OpNode,
   relay,
   SpanNode,
@@ -78,11 +77,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
           visited,
           _test: ValueNode.test,
         }),
-        ...(NullNode.stest(nodes[+attrs])
-          ? {}
-          : {
-              attrs: relay.AttrsNode.fromtvm({id: +attrs, nodes, visited}),
-            }),
+        attrs: relay.AttrsNode.fromtvm({id: +attrs, nodes, visited}),
         op: (OpNode.stest(nodes[+op]) ? OpNode : GlobalVarNode).fromtvm({
           id: +op,
           nodes,
