@@ -29,6 +29,7 @@ export const type_keys = [
   relay.FunctionNode.type_key,
   relay.IdNode.type_key,
   relay.TensorTypeNode.type_key,
+  relay.TupleNode.type_key,
   relay.TupleGetItemNode.type_key,
   relay.VarNode.type_key,
   // relay.attrs
@@ -54,6 +55,7 @@ export type Type =
   | relay.FunctionNode.Type
   | relay.IdNode.Type
   | relay.TensorTypeNode.Type
+  | relay.TupleNode.Type
   | relay.TupleGetItemNode.Type
   | relay.VarNode.Type
   // relay.attrs
@@ -78,6 +80,7 @@ export type SType =
   | relay.FunctionNode.SType
   | relay.IdNode.SType
   | relay.TensorTypeNode.SType
+  | relay.TupleNode.SType
   | relay.TupleGetItemNode.SType
   | relay.VarNode.SType
   // relay.attrs
@@ -116,30 +119,25 @@ export function fromtvm(params: FromTVMParams): Type {
       return relay.IfNode.fromtvm(params);
     case 'relay.TensorType':
       return relay.TensorTypeNode.fromtvm(params);
+    case 'relay.Tuple':
+      return relay.TupleNode.fromtvm(params);
     case 'relay.TupleGetItem':
       return relay.TupleGetItemNode.fromtvm(params);
     case 'relay.Var':
       return relay.VarNode.fromtvm(params);
     case 'relay.attrs.BatchNormAttrs':
-      return relay.attrs.BatchNormAttrsNode.fromtvm(params);
     case 'relay.attrs.BiasAddAttrs':
-      return relay.attrs.BiasAddAttrsNode.fromtvm(params);
+    case 'relay.attrs.ClipAttrs':
+    case 'relay.attrs.Conv1DAttrs':
     case 'relay.attrs.Conv2DAttrs':
-      return relay.attrs.Conv2DAttrsNode.fromtvm(params);
     case 'relay.attrs.DenseAttrs':
-      return relay.attrs.DenseAttrsNode.fromtvm(params);
     case 'relay.attrs.DropoutAttrs':
-      return relay.attrs.DropoutAttrsNode.fromtvm(params);
     case 'relay.attrs.GlobalPool2DAttrs':
-      return relay.attrs.GlobalPool2DAttrsNode.fromtvm(params);
     case 'relay.attrs.MaxPool2DAttrs':
-      return relay.attrs.MaxPool2DAttrsNode.fromtvm(params);
     case 'relay.attrs.ReshapeAttrs':
-      return relay.attrs.ReshapeAttrsNode.fromtvm(params);
     case 'relay.attrs.SoftmaxAttrs':
-      return relay.attrs.SoftmaxAttrsNode.fromtvm(params);
     case 'relay.attrs.TransposeAttrs':
-      return relay.attrs.TransposeAttrsNode.fromtvm(params);
+      return relay.AttrsNode.fromtvm(params);
     case 'runtime.String':
       return runtime.StringNode.fromtvm(params);
     case '':

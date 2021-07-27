@@ -1,5 +1,7 @@
 export * as BatchNormAttrsNode from './BatchNormAttrs';
 export * as BiasAddAttrsNode from './BiasAddAttrs';
+export * as ClipAttrsNode from './ClipAttrs';
+export * as Conv1DAttrsNode from './Conv1DAttrs';
 export * as Conv2DAttrsNode from './Conv2DAttrs';
 export * as DenseAttrsNode from './DenseAttrs';
 export * as DropoutAttrsNode from './DropoutAttrs';

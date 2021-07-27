@@ -5,6 +5,7 @@ export * as FunctionNode from './Function';
 export * as IdNode from './Id';
 export * as IfNode from './If';
 export * as TensorTypeNode from './TensorType';
+export * as TupleNode from './Tuple';
 export * as TupleGetItemNode from './TupleGetItem';
 export * as VarNode from './Var';
 

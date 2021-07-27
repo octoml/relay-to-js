@@ -6,10 +6,10 @@ import {
   typeMismatch,
   visitedTypeMismatch,
 } from '../../common';
-import {ArrayNode, IntImmNode} from '../../';
+import {ArrayNode, IntImmNode} from '../..';
 
-export type TypeKey = 'relay.attrs.Conv2DAttrs';
-export const type_key: TypeKey = 'relay.attrs.Conv2DAttrs';
+export type TypeKey = 'relay.attrs.Conv1DAttrs';
+export const type_key: TypeKey = 'relay.attrs.Conv1DAttrs';
 
 // object type for TypeScript
 export type Type = BaseType & {

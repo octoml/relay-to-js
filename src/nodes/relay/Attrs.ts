@@ -9,6 +9,8 @@ import * as attrs from './attrs/';
 export type TypeKey =
   | attrs.BatchNormAttrsNode.TypeKey
   | attrs.BiasAddAttrsNode.TypeKey
+  | attrs.ClipAttrsNode.TypeKey
+  | attrs.Conv1DAttrsNode.TypeKey
   | attrs.Conv2DAttrsNode.TypeKey
   | attrs.DenseAttrsNode.TypeKey
   | attrs.DropoutAttrsNode.TypeKey
@@ -20,6 +22,8 @@ export type TypeKey =
 export const type_keys = [
   'relay.attrs.BatchNormAttrs',
   'relay.attrs.BiasAddAttrs',
+  'relay.attrs.ClipAttrs',
+  'relay.attrs.Conv1DAttrs',
   'relay.attrs.Conv2DAttrs',
   'relay.attrs.DenseAttrs',
   'relay.attrs.DropoutAttrs',
@@ -33,6 +37,8 @@ export const type_keys = [
 export type Type =
   | attrs.BatchNormAttrsNode.Type
   | attrs.BiasAddAttrsNode.Type
+  | attrs.ClipAttrsNode.Type
+  | attrs.Conv1DAttrsNode.Type
   | attrs.Conv2DAttrsNode.Type
   | attrs.DenseAttrsNode.Type
   | attrs.DropoutAttrsNode.Type
@@ -45,6 +51,8 @@ export type Type =
 export type SType =
   | attrs.BatchNormAttrsNode.SType
   | attrs.BiasAddAttrsNode.SType
+  | attrs.ClipAttrsNode.SType
+  | attrs.Conv1DAttrsNode.SType
   | attrs.Conv2DAttrsNode.SType
   | attrs.DenseAttrsNode.SType
   | attrs.DropoutAttrsNode.SType
@@ -61,6 +69,10 @@ export function fromtvm(params: FromTVMParams): Type {
       return attrs.BatchNormAttrsNode.fromtvm(params);
     case 'relay.attrs.BiasAddAttrs':
       return attrs.BiasAddAttrsNode.fromtvm(params);
+    case 'relay.attrs.ClipAttrs':
+      return attrs.ClipAttrsNode.fromtvm(params);
+    case 'relay.attrs.Conv1DAttrs':
+      return attrs.Conv1DAttrsNode.fromtvm(params);
     case 'relay.attrs.Conv2DAttrs':
       return attrs.Conv2DAttrsNode.fromtvm(params);
     case 'relay.attrs.DenseAttrs':

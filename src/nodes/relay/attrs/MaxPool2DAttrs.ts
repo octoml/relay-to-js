@@ -15,11 +15,12 @@ export const type_key: TypeKey = 'relay.attrs.MaxPool2DAttrs';
 export type Type = BaseType & {
   type_key: TypeKey;
   attrs: {
-    ceil_mode: string;
-    layout: string;
-    padding: ArrayNode.Type<IntImmNode.Type>;
     pool_size: ArrayNode.Type<IntImmNode.Type>;
     strides: ArrayNode.Type<IntImmNode.Type>;
+    padding: ArrayNode.Type<IntImmNode.Type>;
+    dilation: ArrayNode.Type<IntImmNode.Type>;
+    layout: string;
+    ceil_mode: string;
   };
 };
 
@@ -30,6 +31,7 @@ export type SType = {
     ceil_mode: string;
     layout: string;
     padding: string;
+    dilation: string;
     pool_size: string;
     strides: string;
   };
@@ -46,7 +48,7 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
     throw new Error(visitedTypeMismatch(id, ret.type_key, node.type_key));
   }
 
-  const {ceil_mode, layout, padding, pool_size, strides} = node.attrs;
+  const {ceil_mode, layout, padding, pool_size, strides, dilation} = node.attrs;
   return (visited[id] = {
     id,
     type_key,
@@ -67,6 +69,12 @@ export function fromtvm({id, nodes, visited}: FromTVMParams): Type {
       }),
       strides: ArrayNode.fromtvm<IntImmNode.Type>({
         id: +strides,
+        nodes,
+        visited,
+        _test: IntImmNode.test,
+      }),
+      dilation: ArrayNode.fromtvm<IntImmNode.Type>({
+        id: +dilation,
         nodes,
         visited,
         _test: IntImmNode.test,
