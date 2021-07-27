@@ -6,7 +6,6 @@ import {
   typeMismatch,
   visitedTypeMismatch,
 } from '../../common';
-import {ArrayNode, IntImmNode} from '../..';
 
 export type TypeKey = 'relay.attrs.ClipAttrs';
 export const type_key: TypeKey = 'relay.attrs.ClipAttrs';
